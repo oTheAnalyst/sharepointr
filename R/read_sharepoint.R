@@ -67,8 +67,8 @@ read_sharepoint <- function(file,
 
   if (is_fileext_path(dest, c("csv", "csv2", "tsv"))) {
     check_installed("readr")
-    cli_progress_step("{message}{.fn readr::read_delim}")
-    return(readr::read_delim(dest, ...))
+    cli_progress_step("{message}{.fn read.csv}")
+    return(read.csv(dest, ...))
   }
 
   if (is_fileext_path(dest, c("xlsx", "xls"))) {
