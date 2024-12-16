@@ -8,7 +8,7 @@
 #' returned object depends on the file extension of the file parameter.
 #'
 #' - If the file is a csv, csv2, or tsv file or a Microsoft Excel file (xlsx or
-#' xls), [readr::read_delim()] or [readxl::read_excel()] is used to return a
+#' xls), [readr::read_csv()] or [readxl::read_excel()] is used to return a
 #' data frame.
 #' - If the file is a rds file, [readr::read_rds()] is used to return the saved
 #' object.
@@ -66,10 +66,22 @@ read_sharepoint <- function(file,
     return(.f(dest, ...))
   }
 
-  if (is_fileext_path(dest, c("csv", "csv2", "tsv"))) {
+  if (is_fileext_path(dest, c("csv"))) {
     check_installed("readr")
-    cli_progress_step("{message}{.fn read_csv}")
+    cli_progress_step("{message}{.fn readr::read_csv}")
     return(read_csv(dest, ...))
+  }
+
+  if (is_fileext_path(dest, c("csv2"))) {
+    check_installed("readr")
+    cli_progress_step("{message}{.fn readr::read_csv2}")
+    return(readr::read_csv2(dest, ...))
+  }
+
+  if (is_fileext_path(dest, c("tsv"))) {
+    check_installed("readr")
+    cli_progress_step("{message}{.fn readr::read_tsv}")
+    return(readr::read_tsv(dest, ...))
   }
 
   if (is_fileext_path(dest, c("xlsx", "xls"))) {
